@@ -11,14 +11,12 @@ class NaiveBayes:
         self.n = len(classes)  # сколько всего классов
 
         self.prior = count / len(y)  # вероятности классов
-
         # найдем вероятности для слов принадлежать класс
         # сколько раз каждое слово входило в каждый класс
         self.words = [collections.Counter([]) for i in range(self.n)]
         for i in range(len(y)):
             cls = y[i]
             self.words[cls] += collections.Counter(x[i])
-
         self.cls_words_count = sum(len(line) for line in x)  # общее количество слов
 
     # вероятность слова в классе
@@ -39,6 +37,7 @@ def imporve_text(lines):
     for line in lines:
         ans.append(''.join(char for char in line if char not in string.punctuation).lower())
     return ans
+
 
 # read NOT spam messages
 with open("not spam.txt", "r", encoding="UTF-8") as f:
@@ -65,7 +64,6 @@ with open("spam.txt", "r", encoding="UTF-8") as f:
 # получили обучающую выборку
 x1.extend(x0)
 y1.extend(y0)
-
 # тренируем классификатор!
 bayes = NaiveBayes()
 bayes.fit(x1, y1)
